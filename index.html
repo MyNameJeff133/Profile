@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kuro</title>
+  <link rel="stylesheet" href="style.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Underdog&display=swap" rel="stylesheet" />
+  <style>
+    #intro {
+      position: fixed;
+      inset: 0;
+      background: black;
+      color: white;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      z-index: 9999;
+      cursor: pointer;
+    }
+
+    #intro h1 {
+      font-size: 3rem;
+        text-shadow:
+      0 0 5px #fff,
+      0 0 10px #0ff,
+      0 0 20px #0ff,
+      0 0 40px #0ff;
+        transition: text-shadow 0.3s ease;
+    }
+    #intro h1:hover {
+      text-shadow:
+      0 0 10px #fff,
+      0 0 20px #0ff,
+      0 0 40px #0ff,
+      0 0 60px #0ff;
+    }
+    #intro p {
+      margin-top: 20px;
+      font-size: 1.1rem;
+      color: #aaa;
+    }
+
+    #main-content {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <!-- Intro màn hình -->
+  <div id="intro">
+    <h1>Kuro Sakana. Vua cân all thể loại game</h1>
+    <p>(Bấm vào bất kỳ đâu hoặc nhấn phím Enter để vào)</p>
+  </div>
+
+  <!-- Nội dung chính -->
+  <div id="main-content">
+    <video autoplay muted loop playsinline class="bg-video">
+      <source src="assets/background.mp4" type="video/mp4" />
+    </video>
+    <div class="overlay"></div>
+    <main class="card">
+      <div class="avatar-frame">
+        <img src="assets/avatar.jpg" alt="Avatar" class="avatar" />
+      </div>
+      <h1 class="name">Kuro Sakana</h1>
+      <p class="status">👑 MVP</p>
+      <div class="socials">
+        <a href="#"><img src="https://icongr.am/fontawesome/facebook.svg?size=24&color=ffffff" alt="Facebook" /></a>
+        <a href="https://steamcommunity.com/profiles/76561199068293722/"><img src="https://icongr.am/fontawesome/steam.svg?size=24&color=ffffff" alt="Steam" /></a>
+        <a href="#"><img src="https://icongr.am/fontawesome/envelope.svg?size=24&color=ffffff" alt="Email" /></a>
+      </div>
+
+      <div class="audio-block">
+        <img src="assets/soicodoc.jpg" alt="Ảnh mô tả nhạc" />
+        <div class="audio-info">
+          <p class="title">YOASOBI - 怪物</p>
+          <audio id="player" src="assets/music.mp3" loop></audio>
+          <div class="progress-bar">
+            <span class="current-time">0:00</span>
+            <input type="range" value="0" max="100" />
+            <span class="duration">1:00</span>
+          </div>
+          <div class="audio-controls">
+            <button id="play-btn"><img src="https://icongr.am/fontawesome/play.svg?size=24&color=ffffff" alt="Play" /></button>
+            <button id="pause-btn"><img src="https://icongr.am/fontawesome/pause.svg?size=24&color=ffffff" alt="Pause" /></button>
+            <button id="forward-btn"><img src="https://icongr.am/fontawesome/forward.svg?size=24&color=ffffff" alt="Forward" /></button>
+          </div>
+        </div>
+      </div>
+      <p class="signature">Diddy Việt Nam</p>
+    </main>
+
+    <div class="volume-control">
+      <img src="https://icongr.am/fontawesome/volume-up.svg?size=24&color=ffffff" alt="volume" />
+      <input type="range" id="volume-bar" min="0" max="1" step="0.01" value="1" />
+    </div>
+  </div>
+
+  <script>
+    const intro = document.getElementById("intro");
+    const main = document.getElementById("main-content");
+    const audio = document.getElementById("player");
+    const playBtn = document.getElementById("play-btn");
+    const pauseBtn = document.getElementById("pause-btn");
+    const forwardBtn = document.getElementById("forward-btn");
+    const progressBar = document.querySelector(".progress-bar input");
+    const currentTimeText = document.querySelector(".current-time");
+    const durationText = document.querySelector(".duration");
+    const volumeBar = document.getElementById("volume-bar");
+
+    function formatTime(time) {
+      const minutes = Math.floor(time / 60);
+      const seconds = Math.floor(time % 60).toString().padStart(2, "0");
+      return `${minutes}:${seconds}`;
+    }
+
+    // Chuyển sang giao diện chính
+    function enterSite() {
+      intro.style.display = "none";
+      main.style.display = "block";
+
+      audio.play().catch((err) => console.warn("Không tự phát được:", err));
+    }
+
+    // Click hoặc Enter để vào site
+    intro.addEventListener("click", enterSite);
+    window.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") enterSite();
+    });
+
+    // Audio events
+    audio.addEventListener("loadedmetadata", () => {
+      durationText.textContent = formatTime(audio.duration);
+      progressBar.max = Math.floor(audio.duration);
+    });
+
+    audio.addEventListener("timeupdate", () => {
+      progressBar.value = Math.floor(audio.currentTime);
+      currentTimeText.textContent = formatTime(audio.currentTime);
+    });
+
+    progressBar.addEventListener("input", () => {
+      audio.currentTime = progressBar.value;
+    });
+
+    playBtn.addEventListener("click", () => {
+      audio.play();
+    });
+
+    pauseBtn.addEventListener("click", () => {
+      audio.pause();
+    });
+
+    forwardBtn.addEventListener("click", () => {
+      audio.currentTime += 10;
+    });
+
+    volumeBar.addEventListener("input", () => {
+      audio.volume = volumeBar.value;
+    });
+  </script>
+</body>
+</html>

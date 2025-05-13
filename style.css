@@ -1,0 +1,332 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body, html {
+    height: 100%;
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    background: url('assets/background.jpg') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    overflow: hidden;
+
+    /* Dùng flexbox để căn giữa .card */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 0;
+    overflow-y: auto;
+}
+.bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    z-index: -2;
+}
+
+/* Thêm hiệu ứng mờ cho video nền */
+.bg-video::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5); /* Màu đen mờ */
+    z-index: -1; /* Đặt dưới video */
+}
+
+.card {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    padding: 3rem; /* Tăng padding */
+    width: 95%; /* Cho nó gần full chiều ngang hơn */
+    max-width: 800px; /* Tăng max-width để card rộng hơn */
+    
+    background: rgba(255, 255, 255, 0.03);
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    box-shadow: 0 0 30px rgba(255, 255, 255, 0.08);
+    text-align: center;
+
+    font-size: 1.1rem; /* Nếu muốn chữ to lên */
+}
+
+
+.status {
+    color: #e3e3e3;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.socials {
+    margin: 1rem 0;
+}
+
+.socials a {
+    display: inline-block;
+    margin: 0 8px;
+    opacity: 0.8;
+    transition: 0.3s;
+}
+
+.socials a:hover {
+    opacity: 1;
+}
+
+/* Thêm kiểu dáng cho các khối thông tin */
+.info-blocks {
+    margin-top: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+}
+
+.info-block {
+    background-color: rgba(255, 255, 255, 0.05);
+    padding: 0.8rem;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    text-align: left;
+}
+
+.info-block img {
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    margin-right: 0.8rem;
+    object-fit: cover;
+}
+
+.info-block .info-text p {
+    margin-bottom: 0.1rem;
+}
+
+.info-block .info-text .sub-text {
+    font-size: 0.8rem;
+    color: #ccc;
+}
+
+.info-block button {
+    background-color: #5865F2; /* Màu Discord */
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    margin-left: auto;
+}
+
+.location, .views {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: #ccc;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.3rem;
+}
+
+.location svg, .views svg {
+    width: 16px;
+    height: 16px;
+    margin-right: 0.2rem;
+    fill: currentColor;
+}
+
+.audio-block {
+    background: rgba(255, 255, 255, 0.05);
+    padding: 1rem;
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    margin-top: 1.5rem;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    gap: 1rem;
+}
+
+.audio-block img {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 2px solid #fff;
+    flex-shrink: 0;
+}
+
+.audio-info {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+}
+
+.audio-info .title {
+    font-size: 1rem;
+    font-weight: 600;
+    color: #fff;
+    margin-bottom: 0.2rem;
+}
+
+.progress-bar {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.75rem;
+    color: #ccc;
+}
+
+.progress-bar input[type="range"] {
+    flex: 1;
+    height: 4px;
+    border-radius: 4px;
+    background: rgba(255,255,255,0.3);
+    -webkit-appearance: none;
+    appearance: none;
+    outline: none;
+}
+
+.progress-bar input[type="range"]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #fff;
+    cursor: pointer;
+}
+
+.audio-controls {
+    display: flex;
+    gap: 0.8rem;
+}
+
+.audio-controls button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    opacity: 0.8;
+    transition: 0.2s;
+}
+
+.audio-controls button:hover {
+    opacity: 1;
+}
+
+.audio-controls img {
+    width: 20px;
+    height: 20px;
+    filter: brightness(0) invert(1);
+}
+.volume-control {
+    position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background-color: rgba(0, 0, 0, 0.3);
+  padding: 0.4rem 0.6rem;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  z-index: 1000;
+  backdrop-filter: blur(6px);
+  color: white;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+#volume-bar {
+  width: 100px;
+  height: 4px;
+  background: transparent;
+  -webkit-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease;
+}
+
+/* Hiện thanh khi hover vào .volume-control */
+.volume-control:hover #volume-bar {
+  opacity: 1;
+  visibility: visible;
+}
+
+/* Track */
+#volume-bar::-webkit-slider-runnable-track {
+  width: 100%;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.3);
+  border-radius: 2px;
+}
+
+/* Thumb */
+#volume-bar::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 12px;
+  height: 12px;
+  background: white;
+  border-radius: 50%;
+  margin-top: -4px; /* căn giữa thumb */
+}
+
+#volume-bar::-moz-range-thumb {
+  width: 12px;
+  height: 12px;
+  background: white;
+  border: none;
+  border-radius: 50%;
+}
+
+.status {
+    font-family: 'Courier New', Courier, monospace;
+    font-style: bold;
+    font-size: 1.2rem;
+}
+
+.name {
+    font-family: "Underdog", system-ui;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.avatar {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  object-fit: cover;
+  display: block;
+}
+.avatar-frame {
+  padding: 5px;
+  border-radius: 50%;
+  display: inline-block;
+  background: linear-gradient(45deg, #5865F2, #8e44ad); /* màu khung gradient */
+  box-shadow: 0 0 15px #5865F2; /* hiệu ứng phát sáng */
+}
+
+.signature {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 0.8rem;
+    color: #ccc;
+    margin-top: 1rem;
+    text-align: center;
+}
